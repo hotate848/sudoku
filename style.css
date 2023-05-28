@@ -1,0 +1,245 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #333;
+}
+
+/* TODO: 変数名変更 */
+:root {
+    --font-color-main: #344861;
+    --font-color-sub1: #0072e3;
+    --font-color-sub1-hover: #0065c8;
+    --font-color-sub1-active: #3a90e5;
+    --font-color-sub2: #6e7c8c;
+    --font-color-error: #e25f6d;
+    --background-active: #bcdef9;
+    --background-selectedNumber: #c4d7e9;
+    --background-affected: #e2ebf2;
+    --background-controllBtn: #eaeef4;
+    --background-controllBtn-hover: #dce3ed;
+    --background-controllBtn-active: #d2dae7;
+    --background-error: #f6cfd6;
+    --square-border-color: #bfc6d3;
+}
+
+#root {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding-top: 5rem;
+}
+
+.sudoku {
+    height: 40rem;
+    width: 40rem;
+    border: solid 1px var(--font-color-main);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.sudoku * {
+    user-select: none;
+}
+
+.block {
+    border: solid 1px var(--font-color-main);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.square {
+    border: solid thin var(--square-border-color);
+    position: relative;
+    background-color: white;
+}
+
+.square.affected {
+    background-color: var(--background-affected);
+}
+
+.square.affected.active {
+    background-color: var(--background-active);
+}
+
+.square:has(.answer.selectedNumber) {
+    background-color: var(--background-selectedNumber);
+}
+
+.square:has(.answer.error):not(.affected.active) {
+    background-color: var(--background-error);
+}
+
+.answer {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.answer.userInput {
+    color: var(--font-color-sub1);
+}
+
+.answer.userInput.error {
+    color: var(--font-color-error);
+}
+
+.candidate {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    background-color: inherit;
+}
+
+.candidate.show {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.candidateNumber {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--font-color-sub2);
+    visibility: hidden;
+}
+
+.candidateNumber.show {
+    visibility: visible;
+}
+
+.candidateNumber.selectedNumber {
+    color: var(--font-color-main);
+}
+
+.gameControllsWrapper {
+    width: 26rem;
+    margin-left: 2rem;
+}
+
+.gameControlls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gameControllBtnWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gameControllBtn {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    border: solid 2px var(--background-controllBtn);
+    background-color: var(--background-controllBtn);
+    cursor: pointer;
+    position: relative;
+}
+
+.gameControllBtn:hover {
+    border: solid 2px var(--background-controllBtn-hover);
+    background-color: var(--background-controllBtn-hover);
+}
+
+.gameControllBtn:active {
+    border: solid 2px var(--background-controllBtn-active);
+    background-color: var(--background-controllBtn-active);
+}
+
+.gameControllBtnIcon {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+.gameContorollBtnText {
+    color: var(--font-color-sub1);
+    margin-top: .5rem;
+    font-weight: bold;
+}
+
+.memoBtn.active {
+    border: solid 2px var(--font-color-sub1);
+    background-color: var(--background-controllBtn);
+}
+
+.memoBtn::after {
+    content: "OFF";
+    position: absolute;
+    top: -.5rem;
+    right: -.7rem;
+    background-color: #adb6c2;
+    font-weight: bold;
+    color: white;
+    height: 1.5rem;
+    width: 2.5rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.memoBtn.active::after {
+    content: "ON";
+    background-color: var(--font-color-sub1);
+}
+
+.numPadWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: .5rem;
+    height: 26rem;
+    width: 26rem;
+    margin-top: 1rem;
+}
+
+.numPadBtn {
+    border: none;
+    border-radius: .5rem;
+    background-color: var(--background-controllBtn);
+    font-size: 3rem;
+    color: var(--font-color-sub1);
+    cursor: pointer;
+}
+
+.numPadBtn.forMemo {
+    color: #7d848c;
+}
+
+.numPadBtn:hover {
+    background-color: var(--background-controllBtn-hover);
+}
+
+.numPadBtn:active {
+    background-color: var(--background-controllBtn-active);
+}
+
+.startBtn {
+    width: 100%;
+    height: 5rem;
+    margin-top: 1rem;
+    background-color: var(--font-color-sub1);
+    font-size: 2rem;
+    color: white;
+    border: none;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+.startBtn:hover {
+    background-color: var(--font-color-sub1-hover);
+}
+
+.startBtn:active {
+    background-color: var(--font-color-sub1-active);
+}
